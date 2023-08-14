@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer utilities {
+
+    .rect-img-container::after {
+        content: "";
+        width: 0;
+        display: block;
+        padding-bottom: 100%;
+    }
+
+    .rect-img {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        object-position: center;
+        object-fit: cover;
+    }
+
+}

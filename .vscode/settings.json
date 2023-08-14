@@ -1,0 +1,9 @@
+{
+    "editor.quickSuggestions": {
+        "comments": "on",
+        "strings": "on"
+    },
+    "editor.suggest.snippetsPreventQuickSuggestions": true,
+    "tailwindCSS.emmetCompletions": true,
+    "tailwindCSS.experimental.configFile": null
+}
