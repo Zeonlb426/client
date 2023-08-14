@@ -7,7 +7,7 @@ import { UsersIcon, ArrowRightOnRectangleIcon, UserCircleIcon } from '@heroicons
 export default function Header({ children }) {
 
     return (
-        <div className='w-full flex justify-between h-20 py-2 px-6 border-b border-slate-300 dark:border-slate-700'>
+        <div className='w-full fixed shadow-md top-0 left-0 right-0 z-50 bg-[#ffffffbd] dark:bg-[#1e293be0] backdrop-blur-sm flex justify-between h-16 py-1 px-4 border-b border-slate-300 dark:border-slate-700'>
             <div className='flex items-center gap-2'>
                 <Image
                     src="/images/logo.svg"
@@ -19,10 +19,10 @@ export default function Header({ children }) {
                 />
                 <span className='text-sm font-bold text-black dark:text-white'>Instagram</span>
             </div>
-            <Menu as="div" className="relative my-auto">
+            <Menu as="div" className="relative flex items-center">
                 <div>
-                    <Menu.Button className="inline-flex w-full justify-center items-center rounded-full bg-violet-700 p-2 hover:bg-opacity-30">
-                        <UserCircleIcon className="h-10 w-10 text-white" />
+                    <Menu.Button className="inline-flex w-full justify-center items-center rounded-full bg-violet-700 p-2 hover:bg-opacity-50">
+                        <UserCircleIcon className="h-8 w-8 text-white" />
                     </Menu.Button>
                 </div>
                 <Transition
@@ -34,12 +34,12 @@ export default function Header({ children }) {
                     leaveFrom="transform opacity-100 scale-100"
                     leaveTo="transform opacity-0 scale-95"
                 >
-                    <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
+                    <Menu.Items className="absolute right-0 top-[65px] w-56 origin-top-right divide-y divide-slate-100 dark:divide-slate-600 rounded-md bg-white dark:bg-slate-700 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none z-10">
                         <div className="px-1 py-1 ">
                             <Menu.Item>
                                 {({ active }) => (
                                     <button
-                                        className={`${active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                                        className={`${active ? 'bg-violet-500 text-white' : 'text-slate-900 dark:text-slate-200'
                                             } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                     >
                                         {active ? (
@@ -62,7 +62,7 @@ export default function Header({ children }) {
                             <Menu.Item>
                                 {({ active }) => (
                                     <button
-                                        className={`${active ? 'bg-violet-500 text-white' : 'text-gray-900'
+                                        className={`${active ? 'bg-violet-500 text-white' : 'text-gray-900 dark:text-slate-200'
                                             } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                     >
                                         {active ? (
@@ -87,8 +87,6 @@ export default function Header({ children }) {
         </div>
     );
 }
-
-
 
 function ProfileActiveIcon(props) {
     return (

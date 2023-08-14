@@ -11,7 +11,7 @@ import "swiper/css/pagination"
 export default function PostImage({images}) {
 
     return (
-        <div className=''>
+        <div className='bg-slate-400 dark:bg-slate-700'>
             <Swiper
                 modules={[Pagination]}
                 spaceBetween={0}
