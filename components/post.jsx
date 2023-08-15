@@ -6,12 +6,10 @@ export default function Post({ post }) {
 
     return (
         <div className='shadow-md bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-md p-4'>
-
             <PostImage images={post.images} />
-
             <div className='flex items-center justify-between mt-4'>
                 <div className='flex items-center gap-2'>
-                    <Image src={post.user.avatar} className='w-11 h-11 rounded-full object-center object-cover bg-slate-400 dark:bg-slate-700' unoptimized width={44} height={44} alt='Post'/>
+                    <Image src={post.user.avatar} className='w-11 h-11 rounded-full object-center object-cover bg-slate-400 dark:bg-slate-700' unoptimized width={44} height={44} alt='Post' />
                     <span className='text-xs text-slate-900 dark:text-slate-200'>{post.user.firstName} {post.user.lastName}</span>
                 </div>
                 <span className='text-xs text-slate-900 dark:text-slate-200'>{getTimeString(post.createdAt)}</span>
@@ -22,12 +20,11 @@ export default function Post({ post }) {
 
 
 function getTimeString(createdAt) {
+
     const postCreatedAt = new Date(createdAt);
     const postTimestamp = postCreatedAt.getTime();
     const timeNow = new Date().getTime();
-
     const diff = (timeNow - postTimestamp) / 1000; // в сек.
-
     let resultTimeString = 'неизвестно';
 
     if (diff < 60) {

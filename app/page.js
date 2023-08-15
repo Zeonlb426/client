@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import { getServerSession } from "next-auth/next"
 
 export default function Home() {
   return (
@@ -6,4 +7,21 @@ export default function Home() {
       
     </main>
   )
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context)
+
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    }
+  }
+
+  return {
+    props: { session }
+  }
 }
