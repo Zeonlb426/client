@@ -9,12 +9,13 @@ export default function Create() {
     const [description, setDescription] = useState('')
     const [fileLimit, setFileLimit] = useState(false);
 
-    console.log(uploadedFiles);
+    
 
     const handleUploadFiles = files => {
         const uploaded = [...uploadedFiles];
         let limitExceeded = false;
         files.some((file) => {
+            console.log(URL.createObjectURL(file));
             if (uploaded.findIndex((f) => f.name === file.name) === -1) {
                 uploaded.push(file);
                 if (uploaded.length >= MAX_COUNT) setFileLimit(true);
