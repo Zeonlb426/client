@@ -4,6 +4,6 @@ import React from "react";
 
 export default function Provider({ children }) {
 
-  return <SessionProvider basePath="/next/api/auth">{children}</SessionProvider>;
+  return <SessionProvider>{children}</SessionProvider>;
 
 }
