@@ -5,6 +5,7 @@ import Modal from '../../../components/modal'
 import { useState } from 'react'
 import { redirect } from 'next/navigation'
 import { useRouter } from 'next/navigation'
+import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
 export default function Registration() {
 
@@ -13,6 +14,7 @@ export default function Registration() {
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [loading, setLoading] = useState(false)
 
     const [errFirstName, setErrFirstName] = useState('')
     const [errLastName, setErrLastName] = useState('')
@@ -30,6 +32,7 @@ export default function Registration() {
 
     const handlerRegistration = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const res = await fetch(`/back/api/v1/register`, {
             method: "POST",
             headers: {
@@ -43,7 +46,14 @@ export default function Registration() {
                 password,
             }),
         });
+        if (res.status >= 500) {
+            setErrMessage('Извините, сервис не доступен. Повторите попытку позже...');
+            setLoading(false);
+            return
+        }
+        
         const data = await res.json();
+        
         if (res.status === 400) {
             const { errors } = data;
             errors.forEach((err) => {
@@ -52,23 +62,22 @@ export default function Registration() {
                 if (err.path === "lastName") setErrLastName(err.msg);
                 if (err.path === "firstName") setErrFirstName(err.msg);
             });
+            setLoading(false);
+            return
         }
-        if (res.status === 409) {
+
+        if (res.status === 409 || res.status === 418) {
             const { message } = data;
             setErrMessage(message)
+            setLoading(false);
+            return
         }
-        console.log(res.status);
-        console.log(data);
-        // .then((res) => {
-        //     console.log(res);
-        //     return res.json()
-        // })
-        // .then((data) => {
-        //     console.log(data);
-        //         // setData(data)
-        //         // setLoading(false)
-        // })
-        // setShowModal(true);
+
+        if (res.status === 200) {
+            setShowModal(true);
+            setLoading(false);
+            return
+        }
     }
 
     return (
@@ -125,7 +134,7 @@ export default function Registration() {
                                     name="email"
                                     required
                                     value={email}
-                                    onChange={(e) => { setEmail(e.target.value); setErrEmail('') }}
+                                    onChange={(e) => { setEmail(e.target.value); setErrEmail(''); setErrMessage('') }}
                                     placeholder='example@email.com'
                                 />
                                 {errEmail && <div className="absolute text-red-500 text-[10px] -top-[16px]"> {errEmail} </div>}
@@ -142,12 +151,13 @@ export default function Registration() {
                                 {errPassword && <div className="absolute text-red-500 text-[10px] -top-[16px]"> {errPassword} </div>}
                             </div>
                             <button
-                                className='scale-100 mt-4 w-full hover:scale-105 hover:drop-shadow-xl ease-in-out duration-300 py-3 px-4 rounded-md \
+                                className='mt-4 w-full hover:drop-shadow-md ease-in-out duration-300 py-3 px-4 rounded-md \
                                 bg-gradient-to-r from-amber-500 dark:from-purple-600 from-0% via-orange-600 dark:via-cyan-600 via-30% via-pink-500 dark:via-blue-500 via-60% to-fuchsia-700 dark:to-violet-700 to-100% \ 
-                                text-white text-lg'
+                                text-white text-lg flex items-center justify-center'
                                 type="submit"
+                                disabled={loading}
                             >
-                                Зарегистрироваться
+                                {loading ? <ArrowPathIcon className='h-6 w-6 animate-spin'/> : 'Зарегистрироваться'}
                             </button>
                         </form>
 
@@ -180,8 +190,8 @@ export default function Registration() {
                         <div className='text-center'>
                             <h2 className='font-bold'>Подтверждение регистрации</h2>
                             <p className='mt-2 text-slate-600 dark:text-slate-300 text-sm'>
-                                На Вашу почту было отправлено письмо с подтверждение о регистрации. <br />
-                                Перейдите по ссылке, указанной в письме.
+                                На Вашу почту было отправлено письмо с подтверждением о регистрации. <br />
+                                Перейдите по ссылке, указанной в письме.<br /> Время действия ссылки 10 минут.
                             </p>
                             <button onClick={handlerModalButton} className='py-2 px-4 bg-green-500 rounded-md mt-3 text-white'>Ok</button>
                         </div>

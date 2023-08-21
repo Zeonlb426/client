@@ -15,7 +15,7 @@ export const authOptions = {
             id: 'credentials',
             async authorize(credentials, req) {
 
-                const res = await fetch("https://host.docker.internal/back/api/v1/login", {
+                const res = await fetch(`${process.env.NEXTAUTH_URL_INTERNAL}/back/api/v1/login`, {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
@@ -25,7 +25,7 @@ export const authOptions = {
                         email: credentials?.email,
                         password: credentials?.password,
                     }),
-                }); 
+                });
 
                 const user = await res.json();
 
@@ -60,6 +60,11 @@ export const authOptions = {
             return session;
         },
     },
+
+    session: {
+        strategy: "jwt",
+    },
+    secret: process.env.NEXTAUTH_SECRET,
 
 }
 
