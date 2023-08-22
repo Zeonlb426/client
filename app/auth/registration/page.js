@@ -188,7 +188,7 @@ export default function Registration() {
                 showModal ?
                     <Modal>
                         <div className='text-center'>
-                            <h2 className='font-bold'>Подтверждение регистрации</h2>
+                            <h2 className='font-bold text-black dark:text-white'>Подтверждение регистрации</h2>
                             <p className='mt-2 text-slate-600 dark:text-slate-300 text-sm'>
                                 На Вашу почту было отправлено письмо с подтверждением о регистрации. <br />
                                 Перейдите по ссылке, указанной в письме.<br /> Время действия ссылки 10 минут.

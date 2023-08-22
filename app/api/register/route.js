@@ -1,6 +1,6 @@
 
 import { NextResponse } from "next/server";
-
+import { signIn } from "next-auth/react";
 
 export async function GET(req) {
   const token = req.nextUrl.searchParams.get('tkey');
@@ -17,9 +17,17 @@ export async function GET(req) {
 
   const user = await res.json();
 
-  console.log(user);
-
-  return NextResponse.redirect(`${process.env.APP_URL}/flow`);
+  const auth = await signIn('credentials', {
+    redirect: false,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    accessToken: user.token,
+    email: user.email,
+    password: user.password,
+    callbackUrl: `${process.env.APP_URL}/flow`,
+});
+console.log(auth);
+  return NextResponse.redirect(`${process.env.APP_URL}/create`);
   // try {
   //   const { name, email, password } = await req.json();
   //   const hashedPassword = await bcrypt.hash(password, 10);

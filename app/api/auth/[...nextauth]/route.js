@@ -14,20 +14,23 @@ export const authOptions = {
             name: "Credentials",
             id: 'credentials',
             async authorize(credentials, req) {
+                console.log('++++++++++++++++++++++++');
+                console.log(credentials);
+                console.log('++++++++++++++++++++++++');
 
-                const res = await fetch(`${process.env.NEXTAUTH_URL_INTERNAL}/back/api/v1/login`, {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        'Accept': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        email: credentials?.email,
-                        password: credentials?.password,
-                    }),
-                });
+                // const res = await fetch(`${process.env.NEXTAUTH_URL_INTERNAL}/back/api/v1/login`, {
+                //     method: "POST",
+                //     headers: {
+                //         "Content-Type": "application/json",
+                //         'Accept': 'application/json',
+                //     },
+                //     body: JSON.stringify({
+                //         email: credentials?.email,
+                //         password: credentials?.password,
+                //     }),
+                // });
 
-                const user = await res.json();
+                // const user = await res.json();
 
                 // if (user) {
                 //     // Any object returned will be saved in `user` property of the JWT
@@ -44,18 +47,18 @@ export const authOptions = {
     ],
     callbacks: {
         async jwt({ token, user }) {
-            // console.log('*********************');
-            // console.log(token);
-            // console.log(user);
-            // console.log('*********************');
+            console.log('*********************');
+            console.log(token);
+            console.log(user);
+            console.log('*********************');
             return { ...token, ...user };
         },
         async session({ session, token, user }) {
-            // console.log('=============================');
-            // console.log(session);
-            // console.log(token);
-            // console.log(user);
-            // console.log('=============================');
+            console.log('=============================');
+            console.log(session);
+            console.log(token);
+            console.log(user);
+            console.log('=============================');
             session.user = token;
             return session;
         },
