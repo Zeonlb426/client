@@ -15,9 +15,9 @@ export default function Login() {
 
         let params = (new URL(document.location)).searchParams;
         let callbackUrl = params.get("callbackUrl");
-        if (callbackUrl === null || callbackUrl === '') callbackUrl = `${window.location.origin}`
+        if (callbackUrl === null || callbackUrl === '') callbackUrl = 'https://instagram.lern.dev/flow'
         const res = await signIn('credentials', {
-            redirect: false,
+            redirect: true,
             email: email,
             password: password,
             callbackUrl: callbackUrl,

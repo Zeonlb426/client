@@ -3,7 +3,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Modal from '../../../components/modal'
 import { useState } from 'react'
-import { redirect } from 'next/navigation'
 import { useRouter } from 'next/navigation'
 import { ArrowPathIcon } from '@heroicons/react/24/outline';
 
@@ -27,7 +26,6 @@ export default function Registration() {
     const handlerModalButton = () => {
         setShowModal(false)
         router.push('/auth/login')
-        // redirect('https://instagram.lern.dev/auth/login','push')
     }
 
     const handlerRegistration = async (e) => {
