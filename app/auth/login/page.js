@@ -10,6 +10,16 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const handlerGoogle = async e => {
+        e.preventDefault();
+        const res = await signIn('google', {
+            callbackUrl: 'https://instagram.lern.dev/flow',
+        });
+        console.log('----------------');
+        console.log('res: ');
+        console.log(res);
+        console.log('----------------');
+    }
     const handleSubmit = async event => {
         event.preventDefault();
 
@@ -89,7 +99,7 @@ export default function Login() {
                         </div>
                         <button
                             className='flex justify-center items-center gap-2 mt-8 w-full py-2 px-4 border rounded-md border-indigo-500 text-slate-900 dark:text-white'
-                            onClick={''}
+                            onClick={handlerGoogle}
                         >
                             <Image
                                 src="/images/google.svg"

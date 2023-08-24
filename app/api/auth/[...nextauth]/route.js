@@ -1,5 +1,6 @@
 import NextAuth from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 
 export const authOptions = {
     pages: {
@@ -43,21 +44,26 @@ export const authOptions = {
                 }
             },
         }),
+        GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET
+        })
+
     ],
     callbacks: {
         async jwt({ token, user }) {
-            // console.log('*********************');
-            // console.log(token);
-            // console.log(user);
-            // console.log('*********************');
+            console.log('*********************');
+            console.log(token);
+            console.log(user);
+            console.log('*********************');
             return { ...token, ...user };
         },
         async session({ session, token, user }) {
-            // console.log('=============================');
-            // console.log(session);
-            // console.log(token);
-            // console.log(user);
-            // console.log('=============================');
+            console.log('=============================');
+            console.log(session);
+            console.log(token);
+            console.log(user);
+            console.log('=============================');
             session.user = token;
             return session;
         },
