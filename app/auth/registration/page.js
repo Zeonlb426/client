@@ -130,7 +130,7 @@ export default function Registration() {
                                     name="firstName"
                                     required
                                     value={firstName}
-                                    onChange={(e) => { setFirstName(e.target.value); setErrFirstName('') }}
+                                    onChange={(e) => { setFirstName(e.target.value); setErrFirstName(''); setErrMessage(''); }}
                                     placeholder='Имя'
                                 />
                                 {errFirstName && <div className="absolute text-red-500 text-[10px] -top-[16px]"> {errFirstName} </div>}
@@ -141,7 +141,7 @@ export default function Registration() {
                                     name="lastName"
                                     required
                                     value={lastName}
-                                    onChange={(e) => { setLastName(e.target.value); setErrLastName('') }}
+                                    onChange={(e) => { setLastName(e.target.value); setErrLastName(''); setErrMessage(''); }}
                                     placeholder='Фамилия'
                                 />
                                 {errLastName && <div className="absolute text-red-500 text-[10px] -top-[16px]"> {errLastName} </div>}
@@ -152,7 +152,7 @@ export default function Registration() {
                                     name="email"
                                     required
                                     value={email}
-                                    onChange={(e) => { setEmail(e.target.value); setErrEmail('') }}
+                                    onChange={(e) => { setEmail(e.target.value); setErrEmail(''); setErrMessage(''); }}
                                     placeholder='example@email.com'
                                 />
                                 {errEmail && <div className="absolute text-red-500 text-[10px] -top-[16px]"> {errEmail} </div>}
@@ -163,7 +163,11 @@ export default function Registration() {
                                     name="password"
                                     required
                                     value={password}
-                                    onChange={(e) => { setPassword(e.target.value); setErrPassword('') }}
+                                    onChange={(e) => { 
+                                        setPassword(e.target.value); 
+                                        setErrPassword(''); 
+                                        setErrMessage(''); 
+                                    }}
                                     placeholder='Пароль'
                                 />
                                 {errPassword && <div className="absolute text-red-500 text-[10px] -top-[16px]"> {errPassword} </div>}
