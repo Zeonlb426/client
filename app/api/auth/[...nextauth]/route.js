@@ -14,10 +14,6 @@ export const authOptions = {
         CredentialsProvider({
             name: "Credentials",
             async authorize(credentials, req) {
-                // console.log('++++++++++++++++++++++++');
-                // console.log(credentials);
-                // console.log('++++++++++++++++++++++++');
-
                 const res = await fetch(`${process.env.URL_INTERNAL}/back/api/v1/login`, {
                     method: "POST",
                     headers: {
@@ -35,7 +31,13 @@ export const authOptions = {
 
                 if (user) {
                     // Any object returned will be saved in `user` property of the JWT
-                    return user;
+                    return {
+                        email: user.email,
+                        name: user.firstName + ' ' + user.lastName,
+                        image: user.avatar,
+                        token: user.token,
+                        jti: user.jti
+                    };
                 } else {
                     // If you return null then an error will be displayed advising the user to check their details.
                     return null;
@@ -69,10 +71,10 @@ export const authOptions = {
         },
     },
 
-    session: {
-        strategy: "jwt",
-    },
-    secret: process.env.NEXTAUTH_SECRET,
+    // session: {
+    //     strategy: "jwt",
+    // },
+    // secret: process.env.NEXTAUTH_SECRET,
 
 }
 

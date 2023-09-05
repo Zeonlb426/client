@@ -13,6 +13,7 @@ export default function Login() {
     const handlerGoogle = async e => {
         e.preventDefault();
         const res = await signIn('google', {
+            redirect: true,
             callbackUrl: 'https://instagram.lern.dev/flow',
         });
         console.log('----------------');
@@ -20,6 +21,7 @@ export default function Login() {
         console.log(res);
         console.log('----------------');
     }
+
     const handleSubmit = async event => {
         event.preventDefault();
 
