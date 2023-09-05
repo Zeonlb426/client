@@ -1,18 +1,18 @@
 "use client";
 import Post from '../../components/post';
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import { getServerSession } from "next-auth";
+// import { authOptions } from "../api/auth/[...nextauth]/route";
+// import { getServerSession } from "next-auth";
 // import { signIn, signOut, useSession } from "next-auth/client"
-import { useSession } from "next-auth/react"
+// import { useSession } from "next-auth/react"
 
 export default function Flow() {
 
     // const session = await getServerSession(authOptions);
-    const {data: session, status} = useSession(authOptions)
+    // const {data: session, status} = useSession(authOptions)
 
 
-    console.log(status);
-    console.log(session);
+    // console.log(status);
+    // console.log(session);
 
     const posts = [
         {
