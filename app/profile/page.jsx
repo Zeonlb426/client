@@ -13,7 +13,7 @@ export default function Profile() {
     const [longitude, setLongitude] = useState(0.00000);
     const [latitude, setLatitude] = useState(0.00000);
     const [commercial, setCommercial] = useState(false);
-    const [uploadedAvatar, setUploadedAvatar] = useState('');
+    const [avatar, setAvatar] = useState('');
     const [phone, setPhone] = useState('');
     // const [email, setEmail] = useState('')
     const [errFirstName, setErrFirstName] = useState('')
@@ -75,15 +75,9 @@ export default function Profile() {
             setLongitude(data.longitude)
             setLatitude(data.latitude)
             setCommercial(data.commercial)
+            setAvatar(data.avatar)
         });
     }, [token])
-
-
-
-    // let data = null
-    // if (status === "authenticated") {
-    //     data = getProfile();
-    // }
 
     const galleryRef = useRef(null);
 
@@ -127,7 +121,7 @@ export default function Profile() {
     }
 
     const handleAvatar = (e) => {
-
+        setAvatar(e.target.files[0])
     }
     const handleFirstName = (e) => {
         setFirstName(e.target.value)
@@ -160,7 +154,36 @@ export default function Profile() {
         <div className='grid grid-cols-1 w-full p-4 gap-4 md:max-w-4xl mx-auto'>
 
             <div className='grid md:flex gap-6'>
-            
+                    <button className='flex gap-4 items-center justify-center rounded-md text-white p-4 border \
+                            border-slate-400 dark:border-slate-600 \
+                            bg-gradient-to-r from-amber-500 dark:from-purple-600 from-0% via-orange-600 \
+                            dark:via-cyan-600 via-30% via-pink-500 dark:via-blue-500 via-60% to-fuchsia-700 \
+                            dark:to-violet-700 to-100% disabled:grayscale disabled:opacity-50'
+                        onClick={() => galleryRef.current.click()}
+                        type="button"
+                    >
+                        <PhotoIcon className='h-6 w-6 text-white' />
+                        <span>Загрузить фото</span>
+                    </button>
+                    <div className='min-h-[100px] w-full flex flex-wrap gap-4 items-center justify-center bg-slate-300 \
+                                    rounded-md dark:bg-slate-700 text-black dark:text-white p-4 border-2 border-dashed \
+                                    border-slate-400 dark:border-slate-600'
+                                    onClick={() => galleryRef.current.click()}
+                    >
+                        {avatar ? 
+                            <div className=''>
+                                <img src={URL.createObjectURL(avatar)} className='h-20 w-20 object-cover object-center rounded-md' />
+                                <button
+                                    type='button'
+                                    className='absolute -top-2 -right-2 p-2 rounded-md bg-red-500 hover:bg-red-600'
+                                    onClick={() => {}}
+                                >
+                                    <XMarkIcon className='w-4 h-4 text-white' />
+                                </button>
+                            </div>
+                        :
+                            <span> Добавьте фото </span>}
+                    </div>
             </div>
 
             <input
