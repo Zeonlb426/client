@@ -4,11 +4,13 @@ import { Menu, Transition } from '@headlessui/react';
 import { Fragment, useEffect, useRef, useState } from 'react';
 import { UsersIcon, ArrowRightOnRectangleIcon, UserCircleIcon } from '@heroicons/react/20/solid';
 import { signOut, useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation'
 
 
 export default function Header({ children }) {
 
     const { data: session, status, update } = useSession();
+    const router = useRouter()
 
     const avatar = session?.user?.image;
     
@@ -45,6 +47,7 @@ export default function Header({ children }) {
                             <Menu.Item>
                                 {({ active }) => (
                                     <button
+                                        onClick={()=>{router.push('/profile')}}
                                         className={`${active ? 'bg-violet-500 text-white' : 'text-slate-900 dark:text-slate-200'
                                             } group flex w-full items-center rounded-md px-2 py-2 text-sm`}
                                     >
