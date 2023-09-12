@@ -16,10 +16,6 @@ export default function Login() {
             redirect: true,
             callbackUrl: 'https://instagram.lern.dev/flow',
         });
-        console.log('----------------');
-        console.log('res: ');
-        console.log(res);
-        console.log('----------------');
     }
 
     const handleSubmit = async event => {
@@ -34,15 +30,6 @@ export default function Login() {
             password: password,
             callbackUrl: callbackUrl,
         });
-        console.log('----------------');
-        console.log('res: ');
-        console.log(res);
-        console.log('----------------');
-        // if (res?.error) {
-        //     setError(res.error);
-        // } else {
-        //     setError(null);
-        // }
     }
 
     return (

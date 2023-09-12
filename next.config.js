@@ -16,16 +16,6 @@ const nextConfig = {
             },
         ],
     },
-    // reactStrictMode: true,
-    // swcMinify: true,
-    // async rewrites() {
-    //     return [
-    //         {
-    //             source: "/back/api/v1/login",
-    //             destination: "https://instagram.lern.dev/back/api/v1/login",
-    //         },
-    //     ];
-    // },
 }
 
 module.exports = nextConfig
