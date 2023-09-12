@@ -1,7 +1,7 @@
 export { default } from "next-auth/middleware"
 
 // export const config = { matcher: ["/flow", "/create", "/", "/profile"] }
-export const config = { matcher: ["/flow", "/", "/profile"] }
+export const config = { matcher: ["/flow", "/create", "/", "/profile"] }
 // export const config = { matcher: ["/"] }
 
 // import { NextResponse } from 'next/server'

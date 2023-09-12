@@ -10,27 +10,26 @@ export default function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
+    const handlerGoogle = async e => {
+        e.preventDefault();
+        const res = await signIn('google', {
+            redirect: true,
+            callbackUrl: 'https://instagram.lern.dev/flow',
+        });
+    }
+
     const handleSubmit = async event => {
         event.preventDefault();
 
         let params = (new URL(document.location)).searchParams;
         let callbackUrl = params.get("callbackUrl");
-        if (callbackUrl === null || callbackUrl === '') callbackUrl = `${window.location.origin}`
+        if (callbackUrl === null || callbackUrl === '') callbackUrl = 'https://instagram.lern.dev/flow'
         const res = await signIn('credentials', {
-            redirect: false,
+            redirect: true,
             email: email,
             password: password,
             callbackUrl: callbackUrl,
         });
-        console.log('----------------');
-        console.log('res: ');
-        console.log(res);
-        console.log('----------------');
-        // if (res?.error) {
-        //     setError(res.error);
-        // } else {
-        //     setError(null);
-        // }
     }
 
     return (
@@ -85,11 +84,11 @@ export default function Login() {
                         </form>
 
                         <div className='w-full border-b-2 border-slate-200 dark:border-slate-700 mt-6 flex justify-center'>
-                            <span className='bg-white dark:bg-slate-800 p-2 -mb-[20px]'>OR</span>
+                            <span className='bg-white dark:bg-slate-800 p-2 -mb-[20px] text-slate-900 dark:text-white'>OR</span>
                         </div>
                         <button
-                            className='flex justify-center items-center gap-2 mt-8 w-full py-2 px-4 border rounded-md border-indigo-500'
-                            onClick={''}
+                            className='flex justify-center items-center gap-2 mt-8 w-full py-2 px-4 border rounded-md border-indigo-500 text-slate-900 dark:text-white'
+                            onClick={handlerGoogle}
                         >
                             <Image
                                 src="/images/google.svg"
@@ -101,7 +100,7 @@ export default function Login() {
                             />
                             Войти через Google
                         </button>
-                        <div className='flex justify-center mt-4 gap-2'>
+                        <div className='flex justify-center mt-4 gap-2 text-slate-900 dark:text-white'>
                             Забыли пароль? <Link href={''} className='text-indigo-500 underline decoration-solid hover:text-indigo-800  hover:dark:text-indigo-300'> Восстановить!</Link>
                         </div>
                         <div className='mt-4 border-b border-slate-200 dark:border-slate-700 max-w-[70px] mx-auto'></div>

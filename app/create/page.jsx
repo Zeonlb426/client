@@ -1,5 +1,5 @@
 'use client'
-import { useState, useRef, useCallback, useMemo, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline';
 
 const MAX_COUNT = 10;
