@@ -139,8 +139,6 @@ export default function Profile() {
             },
             body: formdata,
         })
-        session.abbr = 'ABRVALG'
-        session.user.abbr = 'ABRVALG'
         session.user.image = URL.createObjectURL(e.target.files[0])
         update()
     }
