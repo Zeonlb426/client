@@ -54,18 +54,23 @@ export const authOptions = {
     ],
     callbacks: {
         async jwt({ token, user }) {
-            console.log('*********************');
-            console.log(token);
-            console.log(user);
-            console.log('*********************');
-            return { ...token, ...user };
+
+            if (user === undefined) {
+                const res = await fetch(`${process.env.URL_INTERNAL}/back/api/v1/user/profile`, {
+                    method: "GET",
+                    headers: {
+                        Authorization: token.token
+                    }
+                });
+
+                if (res.status !== 200) return null;
+                const userData = await res.json();
+                token.name = userData.firstName + ' ' + userData.lastName
+                token.image = userData.avatar
+            }
+            return {...token, ...user};
         },
-        async session({ session, token, user }) {
-            console.log('=============================');
-            console.log(session);
-            console.log(token);
-            console.log(user);
-            console.log('=============================');
+        async session({ session, token }) {
             session.user = token;
             return session;
         },

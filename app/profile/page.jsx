@@ -61,7 +61,7 @@ export default function Profile() {
             setLatitude(data.latitude || null)
             setCommercial(data.commercial)
             setAvatar(data.avatar)
-            setLoading(false);
+
         })
     }, [token])
 
@@ -111,14 +111,12 @@ export default function Profile() {
                 if (err.path === "latitude") setErrLatitude(err.msg);
                 if (err.path === "longitude") setErrLongitude(err.msg);
             });
-            setLoading(false);
             return
         }
 
         if (res.status === 200) {
-            setLoading(false);
             setSuccessful(true);
-            setTimeout(()=>{setSuccessful(false)}, 3000)
+            setTimeout(() => { setSuccessful(false) }, 3000)
             return
         }
     }
@@ -128,45 +126,43 @@ export default function Profile() {
 
         let formdata = new FormData();
         formdata.append("avatar", e.target.files[0]);
-        const res1 = await fetch('/back/api/v1/user/avatar', {
+        await fetch('/back/api/v1/user/avatar', {
             method: "DELETE",
             headers: {
                 Authorization: token
             }
         })
-        const res2 = await fetch('/back/api/v1/user/avatar', {
+        await fetch('/back/api/v1/user/avatar', {
             method: "POST",
             headers: {
                 Authorization: token
             },
             body: formdata,
         })
-
-        const data = await res2.json()
-
-        console.log(session);
-
-        update(session.user.image = URL.createObjectURL(e.target.files[0]))
+        session.abbr = 'ABRVALG'
+        session.user.abbr = 'ABRVALG'
+        session.user.image = URL.createObjectURL(e.target.files[0])
+        update()
     }
 
     return (
         <>
-            { loading ? 
+            {status === "loading" ?
                 <div className='bg-[#0000003d] backdrop-blur-sm z-[110] p-12 absolute top-0 bottom-0 left-0 right-0 flex justify-center items-center'>
                     <span className='p-6 rounded-md bg-white'>
-                        <ArrowPathIcon className='h-6 w-6 animate-spin'/>
+                        <ArrowPathIcon className='h-6 w-6 animate-spin' />
                     </span>
-                    
-                </div> 
-                : 
+
+                </div>
+                :
                 ''
-            } 
-            { successful ? 
+            }
+            {successful ?
                 <div className='bg-green-500 z-[1000] p-6 rounded-md absolute top-[80px] right-[40px] flex justify-center items-center'>
-                    <InformationCircleIcon className='h-6 w-6 text-white'/>
+                    <InformationCircleIcon className='h-6 w-6 text-white' />
                     <span className='text-white'>Данные сохранены!</span>
-                </div> 
-                : 
+                </div>
+                :
                 ''
             }
             <div className='grid grid-cols-1 w-full p-4 gap-4 md:max-w-4xl mx-auto'>
@@ -294,7 +290,5 @@ export default function Profile() {
                 </form>
             </div>
         </>
-        
-        
     )
 }
