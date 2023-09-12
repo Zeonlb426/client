@@ -1,22 +1,58 @@
 'use client'
 import { useState, useRef } from 'react';
 import { PhotoIcon, XMarkIcon } from '@heroicons/react/24/outline';
+import { useSession } from "next-auth/react";
+import { useRouter } from 'next/navigation';
 
 const MAX_COUNT = 10;
 
 export default function Create() {
 
+    const { data: session, status, update } = useSession()
+    const token = session?.user?.token
+
+    const router = useRouter();
+
     const galleryRef = useRef(null);
 
     const [uploadedFiles, setUploadedFiles] = useState([]);
     const [description, setDescription] = useState('');
+
+    const [errUploadedFiles, setErrUploadedFiles] = useState('')
+    const [errMessage, setErrMessage] = useState('')
+    
     const [fileLimit, setFileLimit] = useState(false);
     const [indexDraggedItem, setIndexDraggedItem] = useState(null);
     const [isDragged, setIsDragged] = useState(false);
     const [newPosition, setNewPosition] = useState(null);
 
-    const handlerCreate = () => {
-        console.log('Press Create');
+    const handlerCreate = async () => {
+
+        if (uploadedFiles.length === 0) {
+            setErrUploadedFiles('Для создания поста нужно выбрать изображение')
+            return
+        }
+        let formdata = new FormData();
+        uploadedFiles.forEach( (file) => {
+            formdata.append("gallery", file);
+        })
+        formdata.append("description", description === '' ? null : description);
+
+        const res = await fetch('/back/api/v1/post/create', {
+            method: "POST",
+            headers: {
+                Authorization: token
+            },
+            body: formdata,
+        })
+
+        if (res.status !== 200) {
+            console.log(await res.json());
+            setErrMessage('Ошибка отправки данных')
+            return
+        }
+
+        router.push('/flow')
     }
 
     const handleDescription = (e) => {
@@ -94,6 +130,7 @@ export default function Create() {
         });
 
         setUploadedFiles(newArrayFiles);
+        setErrUploadedFiles('')
     }
 
 
@@ -113,9 +150,9 @@ export default function Create() {
                         <PhotoIcon className='h-6 w-6 text-white' />
                         <span>Загрузить фото</span>
                     </button>
-                    <div className='min-h-[100px] w-full flex flex-wrap gap-4 items-center justify-center bg-slate-300 \
+                    <div className={`min-h-[100px] relative w-full flex flex-wrap gap-4 items-center justify-center bg-slate-300 \
                                     rounded-md dark:bg-slate-700 text-black dark:text-white p-4 border-2 border-dashed \
-                                    border-slate-400 dark:border-slate-600'
+                                    ${errUploadedFiles ? 'border-red-500 ' : 'border-slate-400 dark:border-slate-600'}`}
                     >
                         {uploadedFiles.length > 0 ? uploadedFiles.map((file, index) =>
                             <div
@@ -143,6 +180,7 @@ export default function Create() {
                         )
                             :
                             <span> Добавьте фото </span>}
+                        {errUploadedFiles && <div className="absolute text-red-500 text-[10px] top-[16px]"> {errUploadedFiles} </div>}
                     </div>
                 </div>
 
